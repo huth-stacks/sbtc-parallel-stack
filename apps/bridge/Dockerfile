@@ -1,4 +1,4 @@
-FROM node:18 AS builder
+FROM node:20 AS builder
 
 WORKDIR /code
 
@@ -17,7 +17,7 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED="1"
 RUN npm run build
 
-FROM node:18
+FROM node:20
 
 WORKDIR /app
 
