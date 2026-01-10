@@ -114,8 +114,8 @@ export default function DepositPage() {
       : null;
 
   const handleSubmit = async () => {
-    // Check if wallet connected
-    if (!walletInfo) {
+    // Check if wallet connected (walletInfoAtom defaults to non-null object)
+    if (!walletInfo?.selectedWallet) {
       setShowConnectWallet(true);
       return;
     }
@@ -137,7 +137,8 @@ export default function DepositPage() {
   };
 
   // If no wallet connected, show connect prompt
-  if (!walletInfo) {
+  // walletInfoAtom defaults to non-null object, so check selectedWallet
+  if (!walletInfo?.selectedWallet) {
     return (
       <div className="flex flex-col items-center min-h-[60vh] py-16">
         <div className="text-center space-y-4 max-w-md">
