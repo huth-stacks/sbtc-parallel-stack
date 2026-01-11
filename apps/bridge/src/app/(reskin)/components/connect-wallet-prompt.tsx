@@ -4,12 +4,10 @@ import { useSetAtom } from "jotai";
 import { showConnectWalletAtom } from "@/util/atoms";
 
 interface ConnectWalletPromptProps {
-  title?: string;
   description: string;
 }
 
 export function ConnectWalletPrompt({
-  title = "Connect Your Wallet",
   description,
 }: ConnectWalletPromptProps) {
   const setShowConnectWallet = useSetAtom(showConnectWalletAtom);
@@ -33,14 +31,13 @@ export function ConnectWalletPrompt({
         </svg>
       </div>
 
-      <h2 className="text-xl font-semibold text-text-primary">{title}</h2>
-      <p className="text-text-secondary">{description}</p>
+      <p className="text-lg text-text-secondary">{description}</p>
 
       <button
         onClick={() => setShowConnectWallet(true)}
         className="px-6 py-3 rounded-xl bg-stacks-500 text-white font-semibold hover:bg-stacks-600 transition-colors"
       >
-        Connect Wallet
+        Get Started
       </button>
     </div>
   );
