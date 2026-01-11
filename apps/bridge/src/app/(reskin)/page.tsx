@@ -98,8 +98,10 @@ export default function DepositPage() {
   const networkFee = 0.00008; // Approximate network fee
   const receiveAmount = amount ? Math.max(0, amountNum - networkFee) : 0;
 
-  // Convert caps from satoshis to BTC
-  const minDepositBtc = perDepositMinimum / 1e8;
+  // Convert caps from satoshis to BTC (with sensible fallbacks)
+  // Contract minimum is 0.001 BTC (100000 sats)
+  const FALLBACK_MIN_SATS = 100000;
+  const minDepositBtc = (perDepositMinimum || FALLBACK_MIN_SATS) / 1e8;
   const maxDepositBtc = currentCap / 1e8;
 
   // Validation
@@ -121,7 +123,7 @@ export default function DepositPage() {
       return;
     }
 
-    if (!amount || amountError) return;
+    if (!amount || amountNum <= 0 || amountError) return;
 
     // Convert BTC to satoshis for the hook
     const amountInSats = new Decimal(amount).times(1e8).toNumber();
@@ -209,8 +211,8 @@ export default function DepositPage() {
                 </span>
                 <button
                   onClick={() => setAmount(Math.max(0, btcAvailable - networkFee).toFixed(8))}
-                  className="text-stacks-500 hover:text-stacks-600 font-medium hover:underline"
-                  disabled={balanceLoading}
+                  className="text-stacks-500 hover:text-stacks-600 font-medium hover:underline disabled:text-text-tertiary disabled:cursor-not-allowed disabled:no-underline"
+                  disabled={balanceLoading || btcAvailable <= 0}
                 >
                   Max
                 </button>
