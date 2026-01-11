@@ -43,31 +43,31 @@ export default function LayoutClientReskin({
         <header className="border-b border-explorer-border-secondary bg-surface-fourth dark:bg-surface-fourth">
           <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-sand-700 dark:bg-sand-100 flex items-center justify-center">
-                <span className="text-sand-50 dark:text-sand-1000 font-bold text-sm">
+            <Link href="/" className="flex items-center gap-2 md:gap-3">
+              <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-sand-800 dark:bg-sand-200 flex items-center justify-center">
+                <span className="text-white dark:text-sand-900 font-bold text-sm">
                   S
                 </span>
               </div>
-              <span className="font-semibold text-text-primary">
+              <span className="font-semibold text-sand-900 dark:text-sand-100 text-sm md:text-base">
                 sBTC Bridge
               </span>
             </Link>
 
             {/* Wallet Connection */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 md:gap-3">
               <ThemeToggler />
               {walletInfo?.selectedWallet ? (
                 <button
                   onClick={() => setShowConnectWallet(true)}
-                  className="px-4 py-2 rounded-lg bg-sand-700 dark:bg-sand-100 text-sand-50 dark:text-sand-1000 font-medium text-sm hover:bg-sand-800 dark:hover:bg-sand-200 transition-colors"
+                  className="px-3 md:px-4 py-2 rounded-lg bg-sand-800 dark:bg-sand-200 text-white dark:text-sand-900 font-medium text-xs md:text-sm hover:bg-sand-900 dark:hover:bg-sand-300 transition-colors"
                 >
                   {displayAddress}
                 </button>
               ) : (
                 <button
                   onClick={() => setShowConnectWallet(true)}
-                  className="px-4 py-2 rounded-lg bg-stacks-500 text-white font-medium text-sm hover:bg-stacks-600 transition-colors"
+                  className="px-3 md:px-4 py-2 rounded-lg bg-stacks-500 text-white font-medium text-xs md:text-sm hover:bg-stacks-600 transition-colors"
                 >
                   Connect Wallet
                 </button>
@@ -133,10 +133,10 @@ function NavLink({
     <Link
       href={href}
       className={`
-        px-4 py-3 text-sm font-medium border-b-2 transition-colors
+        px-3 md:px-4 py-3 text-sm font-medium border-b-2 transition-colors
         ${isActive
-          ? "border-stacks-500 text-text-primary"
-          : "border-transparent text-text-secondary hover:text-text-primary hover:border-sand-300"
+          ? "border-stacks-500 text-sand-900 dark:text-sand-100"
+          : "border-transparent text-sand-500 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 hover:border-sand-300"
         }
       `}
     >

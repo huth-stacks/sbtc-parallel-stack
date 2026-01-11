@@ -65,9 +65,9 @@ export function ProtocolStatsBar() {
   const marketCap = sbtcSupply * (btcPrice || 96000);
 
   return (
-    <div className="border-b border-explorer-border-secondary bg-surface-fourth dark:bg-surface-fourth">
+    <div className="hidden md:block border-b border-explorer-border-secondary bg-surface-fourth dark:bg-surface-fourth">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="flex items-center justify-between py-2 gap-6 overflow-x-auto">
+        <div className="flex items-center justify-between py-2 gap-6">
           {/* sBTC Supply */}
           <StatItem
             label="sBTC Supply"
@@ -121,7 +121,7 @@ function StatItem({
 }) {
   return (
     <div className="flex items-center gap-2 flex-shrink-0 group relative" title={tooltip}>
-      <span className="text-xs text-text-tertiary whitespace-nowrap">{label}</span>
+      <span className="text-xs text-text-secondary whitespace-nowrap">{label}</span>
       <span
         className={`text-sm font-semibold whitespace-nowrap ${
           highlight
