@@ -23,10 +23,10 @@ export function NoFeesCallout() {
         </svg>
       </div>
       <div>
-        <p className="text-sm font-medium text-stacks-700 dark:text-stacks-300">
+        <p className="text-sm font-medium text-stacks-700 dark:text-stacks-200">
           No gas fees
         </p>
-        <p className="text-xs text-stacks-600/80 dark:text-stacks-400/80 mt-1">
+        <p className="text-xs text-stacks-600 dark:text-stacks-300 mt-1">
           Sponsored by Stacks Labs
         </p>
       </div>

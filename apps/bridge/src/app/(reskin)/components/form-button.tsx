@@ -21,8 +21,8 @@ export const FormButton = ({
         className || ""
       } ${
         variant === "primary"
-          ? "bg-orange dark:bg-dark-reskin-orange disabled:bg-darkGray disabled:dark:bg-white disabled:opacity-20"
-          : "bg-transparent text-button-secondary-text-light dark:text-gray-200 border border-button-secondary-text-light dark:border-gray-400 rounded-lg"
+          ? "bg-orange hover:bg-orange/90 dark:bg-dark-reskin-orange dark:hover:bg-dark-reskin-orange/90 disabled:bg-darkGray disabled:dark:bg-white disabled:opacity-20"
+          : "bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 text-button-secondary-text-light dark:text-gray-200 border border-button-secondary-text-light dark:border-gray-400 rounded-lg"
       }`}
       disabled={disabled}
       onClick={onClick}
