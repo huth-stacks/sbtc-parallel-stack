@@ -14,6 +14,7 @@ import { elide } from "@/util";
 import { withdrawStepper } from "../stepper";
 import { WithdrawTimeline } from "../withdraw-stepper";
 import { FormButton } from "@/app/(reskin)/components/form-button";
+import { ConnectWalletPrompt } from "@/app/(reskin)/components/connect-wallet-prompt";
 import { useSubmitWithdraw } from "../../hooks/use-submit-withdraw";
 import { useWithdrawalValidation } from "../../hooks/withdrawal-validation";
 
@@ -30,6 +31,13 @@ export const WithdrawForm = () => {
 
   const isConnected = !!stxAddress;
   const setShowConnectWallet = useSetAtom(showConnectWalletAtom);
+
+  // Show connect prompt when no wallet connected
+  if (!isConnected) {
+    return (
+      <ConnectWalletPrompt description="Connect your wallet to withdraw sBTC back to BTC." />
+    );
+  }
 
   const {
     addressValidationSchema,

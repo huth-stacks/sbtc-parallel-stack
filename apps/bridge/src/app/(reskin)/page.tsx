@@ -18,6 +18,7 @@ import useMintCaps from "@/hooks/use-mint-caps";
 import { useSendDeposit } from "@/app/(reskin)/hooks/use-send-deposit";
 import getBtcBalance from "@/actions/get-btc-balance";
 import { HowItWorksSidebar } from "./components/how-it-works-sidebar";
+import { ConnectWalletPrompt } from "./components/connect-wallet-prompt";
 import Decimal from "decimal.js";
 
 // BTC price fetch (simple implementation - could use a price feed)
@@ -137,28 +138,9 @@ export default function DepositPage() {
   };
 
   // If no wallet connected, show connect prompt
-  // walletInfoAtom defaults to non-null object, so check selectedWallet
   if (!walletInfo?.selectedWallet) {
     return (
-      <div className="flex flex-col items-center min-h-[60vh] py-16">
-        <div className="text-center space-y-4 max-w-md">
-          <div className="w-16 h-16 mx-auto rounded-full bg-stacks-100 dark:bg-stacks-700/30 flex items-center justify-center">
-            <svg className="w-8 h-8 text-stacks-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </svg>
-          </div>
-          <h2 className="text-xl font-semibold text-text-primary">Connect Your Wallet</h2>
-          <p className="text-text-secondary">
-            Connect a Bitcoin wallet to deposit BTC and receive sBTC on Stacks.
-          </p>
-          <button
-            onClick={() => setShowConnectWallet(true)}
-            className="px-6 py-3 rounded-xl bg-stacks-500 text-white font-semibold hover:bg-stacks-600 transition-colors"
-          >
-            Connect Wallet
-          </button>
-        </div>
-      </div>
+      <ConnectWalletPrompt description="Connect a Bitcoin wallet to deposit BTC and receive sBTC on Stacks." />
     );
   }
 
