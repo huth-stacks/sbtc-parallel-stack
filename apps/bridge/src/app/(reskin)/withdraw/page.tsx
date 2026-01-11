@@ -22,13 +22,20 @@ import { WithdrawHowItWorks } from "../components/withdraw-how-it-works";
 import { ConnectWalletPrompt } from "../components/connect-wallet-prompt";
 import { validateBitcoinAddress } from "@/util/validate-bitcoin-address";
 
-// BTC price fetch
+// BTC price fetch - uses configured mempool URL
 const useBtcPrice = () => {
+  const { PUBLIC_MEMPOOL_URL, WALLET_NETWORK } = useAtomValue(bridgeConfigAtom);
+
   const { data: price } = useQuery({
-    queryKey: ["btc-price"],
+    queryKey: ["btc-price", PUBLIC_MEMPOOL_URL],
     queryFn: async () => {
       try {
-        const res = await fetch("https://mempool.space/api/v1/prices");
+        // Skip price fetch for devnet (no real prices)
+        if (WALLET_NETWORK === "sbtcDevenv") {
+          return 96000; // Mock price for devnet
+        }
+        const baseUrl = PUBLIC_MEMPOOL_URL || "https://mempool.space";
+        const res = await fetch(`${baseUrl}/api/v1/prices`);
         const data = await res.json();
         return data.USD || 96000;
       } catch {

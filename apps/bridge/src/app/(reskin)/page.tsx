@@ -13,7 +13,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useQuery } from "@tanstack/react-query";
-import { walletInfoAtom, showConnectWalletAtom } from "@/util/atoms";
+import { walletInfoAtom, showConnectWalletAtom, bridgeConfigAtom } from "@/util/atoms";
 import useMintCaps from "@/hooks/use-mint-caps";
 import { useSendDeposit } from "@/app/(reskin)/hooks/use-send-deposit";
 import getBtcBalance from "@/actions/get-btc-balance";
@@ -21,13 +21,20 @@ import { HowItWorksSidebar } from "./components/how-it-works-sidebar";
 import { ConnectWalletPrompt } from "./components/connect-wallet-prompt";
 import Decimal from "decimal.js";
 
-// BTC price fetch (simple implementation - could use a price feed)
+// BTC price fetch - uses configured mempool URL, falls back to mempool.space for mainnet
 const useBtcPrice = () => {
+  const { PUBLIC_MEMPOOL_URL, WALLET_NETWORK } = useAtomValue(bridgeConfigAtom);
+
   const { data: price } = useQuery({
-    queryKey: ["btc-price"],
+    queryKey: ["btc-price", PUBLIC_MEMPOOL_URL],
     queryFn: async () => {
       try {
-        const res = await fetch("https://mempool.space/api/v1/prices");
+        // Use configured mempool for mainnet, skip price fetch for devnet (no real prices)
+        if (WALLET_NETWORK === "sbtcDevenv") {
+          return 96000; // Mock price for devnet
+        }
+        const baseUrl = PUBLIC_MEMPOOL_URL || "https://mempool.space";
+        const res = await fetch(`${baseUrl}/api/v1/prices`);
         const data = await res.json();
         return data.USD || 96000;
       } catch {

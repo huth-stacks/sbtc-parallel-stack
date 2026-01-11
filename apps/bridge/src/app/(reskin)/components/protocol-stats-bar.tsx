@@ -4,11 +4,13 @@
  * Displays real protocol stats from:
  * - getEmilyLimits() for caps
  * - getCurrentSbtcSupply() for supply
- * - Mempool API for BTC price
+ * - Mempool API for BTC price (uses configured URL)
  */
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { useAtomValue } from "jotai";
+import { bridgeConfigAtom } from "@/util/atoms";
 import getEmilyLimits from "@/actions/get-emily-limits";
 import getCurrentSbtcSupply from "@/actions/get-current-sbtc-supply";
 
@@ -26,6 +28,8 @@ const formatUsd = (value: number) => {
 };
 
 export function ProtocolStatsBar() {
+  const { PUBLIC_MEMPOOL_URL, WALLET_NETWORK } = useAtomValue(bridgeConfigAtom);
+
   // Fetch Emily limits (caps, available amounts)
   const { data: limits, isLoading: limitsLoading } = useQuery({
     queryKey: ["emily-limits"],
@@ -40,12 +44,17 @@ export function ProtocolStatsBar() {
     staleTime: 5 * 60 * 1000,
   });
 
-  // Fetch BTC price
+  // Fetch BTC price - uses configured mempool URL
   const { data: btcPrice } = useQuery({
-    queryKey: ["btc-price"],
+    queryKey: ["btc-price", PUBLIC_MEMPOOL_URL],
     queryFn: async () => {
       try {
-        const res = await fetch("https://mempool.space/api/v1/prices");
+        // Skip price fetch for devnet (no real prices)
+        if (WALLET_NETWORK === "sbtcDevenv") {
+          return 96000; // Mock price for devnet
+        }
+        const baseUrl = PUBLIC_MEMPOOL_URL || "https://mempool.space";
+        const res = await fetch(`${baseUrl}/api/v1/prices`);
         const data = await res.json();
         return data.USD || 96000;
       } catch {
