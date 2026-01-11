@@ -137,14 +137,9 @@ export default function DepositPage() {
     }
   };
 
-  // If no wallet connected, show connect prompt
-  if (!walletInfo?.selectedWallet) {
-    return (
-      <ConnectWalletPrompt description="Connect a Bitcoin wallet to deposit BTC and receive sBTC on Stacks." />
-    );
-  }
+  const isConnected = !!walletInfo?.selectedWallet;
 
-  return (
+  const formContent = (
     <div className="flex flex-col items-center min-h-[80vh] py-8">
       {/* Header */}
       <div className="mb-6 text-center">
@@ -382,4 +377,15 @@ export default function DepositPage() {
       </div>
     </div>
   );
+
+  // Show blurred preview with CTA when not connected
+  if (!isConnected) {
+    return (
+      <ConnectWalletPrompt description="Connect your wallet to deposit BTC and receive sBTC.">
+        {formContent}
+      </ConnectWalletPrompt>
+    );
+  }
+
+  return formContent;
 }

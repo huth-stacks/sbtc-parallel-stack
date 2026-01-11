@@ -32,13 +32,7 @@ export const WithdrawForm = () => {
   const isConnected = !!stxAddress;
   const setShowConnectWallet = useSetAtom(showConnectWalletAtom);
 
-  // Show connect prompt when no wallet connected
-  if (!isConnected) {
-    return (
-      <ConnectWalletPrompt description="Connect your wallet to withdraw sBTC back to BTC." />
-    );
-  }
-
+  // Hooks must be called before any conditional returns
   const {
     addressValidationSchema,
     amountValidationSchema,
@@ -91,7 +85,7 @@ export const WithdrawForm = () => {
     }
   };
 
-  return (
+  const formContent = (
     <Formik
       initialValues={{
         amount: "",
@@ -216,4 +210,15 @@ export const WithdrawForm = () => {
       )}
     </Formik>
   );
+
+  // Show blurred preview with CTA when not connected
+  if (!isConnected) {
+    return (
+      <ConnectWalletPrompt description="Connect your wallet to withdraw sBTC back to BTC.">
+        {formContent}
+      </ConnectWalletPrompt>
+    );
+  }
+
+  return formContent;
 };
