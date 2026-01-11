@@ -22,7 +22,7 @@ export const FormButton = ({
       } ${
         variant === "primary"
           ? "bg-orange dark:bg-dark-reskin-orange disabled:bg-darkGray disabled:dark:bg-white disabled:opacity-20"
-          : "bg-transparent text-button-secondary-text-light dark:text-midGray border border-button-secondary-text-light rounded-lg"
+          : "bg-transparent text-button-secondary-text-light dark:text-gray-200 border border-button-secondary-text-light dark:border-gray-400 rounded-lg"
       }`}
       disabled={disabled}
       onClick={onClick}

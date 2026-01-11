@@ -36,7 +36,7 @@ export const AmountInput = ({
         className={`md:ml-14 min-h-48 rounded-2xl bg-transparent border pt-6 pb-3 pr-3 pl-8 ${error ? "border-red-500" : "border-black dark:border-white border-opacity-20 dark:border-opacity-20"}`}
       >
         <div className="flex items-center justify-between mb-2">
-          <div className="uppercase text-xl tracking-normal text-gray-500 dark:text-gray-400">
+          <div className="uppercase text-xl tracking-normal text-gray-500 dark:text-gray-300">
             Withdraw sBTC
           </div>
           {(() => {
@@ -46,7 +46,7 @@ export const AmountInput = ({
             if (!showBalance) return null;
             const numericBalance = typeof balance === "bigint" ? Number(balance) : balance;
             return (
-              <div className="text-xs text-gray-600 dark:text-gray-300 font-matter-mono italic opacity-50">
+              <div className="text-xs text-gray-600 dark:text-gray-400 font-matter-mono italic opacity-70 dark:opacity-100">
                 {(numericBalance / 1e8).toLocaleString(undefined, { maximumFractionDigits: 8 })} sBTC available
               </div>
             );
