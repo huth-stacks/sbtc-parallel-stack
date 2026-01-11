@@ -34,7 +34,7 @@ import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
 
 function MobileStatus({ isConfirmed }: { isConfirmed: boolean }) {
   return (
-    <TableCell className="dark:text-midGray">
+    <TableCell className="dark:text-gray-200">
       <div
         className={`flex items-center font-medium ${isConfirmed ? "text-chateau-green" : "text-confetti"}`}
       >
@@ -69,7 +69,7 @@ function DesktopStatus({ type, data }: HistoryItem) {
   });
 
   return (
-    <TableCell className="dark:text-midGray hidden md:table-cell uppercase ">
+    <TableCell className="dark:text-gray-200 hidden md:table-cell uppercase ">
       {isConfirmed ? (
         timestamp ? (
           timestamp
@@ -106,10 +106,10 @@ function HistoryEntry(props: HistoryItem) {
   return (
     <Link href={link} className="contents">
       <TableRow className="font-matter-mono h-16 border-y border-light-reskin-border-gray dark:border-dark-reskin-border-gray cursor-pointer">
-        <TableCell className="dark:text-midGray w-1/2 md:w-44 p-0 pl-4">
+        <TableCell className="dark:text-gray-200 w-1/2 md:w-44 p-0 pl-4">
           {amount} {amountPostFix}
         </TableCell>
-        <TableCell className="dark:text-midGray uppercase md:w-44">
+        <TableCell className="dark:text-gray-200 uppercase md:w-44">
           {type}
         </TableCell>
         {isMobile ? (
@@ -117,7 +117,7 @@ function HistoryEntry(props: HistoryItem) {
         ) : (
           <DesktopStatus {...props} />
         )}
-        <TableCell className="dark:text-midGray hidden md:table-cell uppercase underline">
+        <TableCell className="dark:text-gray-200 hidden md:table-cell uppercase underline">
           Open {"->"}
         </TableCell>
       </TableRow>
@@ -185,13 +185,13 @@ export function HistoryTable() {
           (a, b) => b.data.lastUpdateHeight - a.data.lastUpdateHeight,
         ) as HistoryItem[];
       }
+      // Fallback for unhandled tab values
+      return [] as HistoryItem[];
     },
-    enabled: () => {
-      // Asigna and fordefi force this condition since
-      // fordefi might have one or the other or both
-      // and asigna can only have one or the other
-      return Boolean(stxAddress || btcAddress);
-    },
+    // Asigna and fordefi force this condition since
+    // fordefi might have one or the other or both
+    // and asigna can only have one or the other
+    enabled: Boolean(stxAddress || btcAddress),
   });
 
   const loadingRows = Array.from({ length: 4 }, (item, index) => (
