@@ -39,20 +39,29 @@ export default function LayoutClientReskin({
   return (
     <div className={theme}>
       <div className="min-h-screen bg-surface-tertiary dark:bg-surface-tertiary">
-        {/* Header */}
+        {/* Header with Navigation */}
         <header className="border-b border-explorer-border-secondary bg-surface-fourth dark:bg-surface-fourth">
           <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 md:gap-3">
-              <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-sand-800 dark:bg-sand-200 flex items-center justify-center">
-                <span className="text-white dark:text-sand-900 font-bold text-sm">
-                  S
+            {/* Logo + Navigation */}
+            <div className="flex items-center gap-4 md:gap-8">
+              <Link href="/" className="flex items-center gap-2 md:gap-3">
+                <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-sand-800 dark:bg-sand-200 flex items-center justify-center">
+                  <span className="text-white dark:text-sand-900 font-bold text-sm">
+                    S
+                  </span>
+                </div>
+                <span className="font-semibold text-sand-900 dark:text-sand-100 text-sm md:text-base">
+                  sBTC Bridge
                 </span>
-              </div>
-              <span className="font-semibold text-sand-900 dark:text-sand-100 text-sm md:text-base">
-                sBTC Bridge
-              </span>
-            </Link>
+              </Link>
+
+              {/* Navigation Tabs */}
+              <nav className="hidden sm:flex items-center gap-1">
+                <NavLink href="/" label="Deposit" exact />
+                <NavLink href="/withdraw" label="Withdraw" />
+                <NavLink href="/history" label="History" />
+              </nav>
+            </div>
 
             {/* Wallet Connection */}
             <div className="flex items-center gap-2 md:gap-3">
@@ -74,21 +83,19 @@ export default function LayoutClientReskin({
               )}
             </div>
           </div>
-        </header>
 
-        {/* Protocol Stats Bar */}
-        <ProtocolStatsBar />
-
-        {/* Navigation */}
-        <nav className="border-b border-explorer-border-secondary bg-surface-fourth dark:bg-surface-fourth">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="flex gap-1">
+          {/* Mobile Navigation */}
+          <nav className="sm:hidden border-t border-explorer-border-secondary">
+            <div className="flex justify-center gap-1 px-4">
               <NavLink href="/" label="Deposit" exact />
               <NavLink href="/withdraw" label="Withdraw" />
               <NavLink href="/history" label="History" />
             </div>
-          </div>
-        </nav>
+          </nav>
+        </header>
+
+        {/* Protocol Stats Bar */}
+        <ProtocolStatsBar />
 
         {/* Main Content */}
         <main className="max-w-6xl mx-auto px-4 py-8">
@@ -133,10 +140,10 @@ function NavLink({
     <Link
       href={href}
       className={`
-        px-3 md:px-4 py-3 text-sm font-medium border-b-2 transition-colors
+        px-3 py-2 text-sm font-medium rounded-lg transition-colors
         ${isActive
-          ? "border-stacks-500 text-sand-900 dark:text-sand-100"
-          : "border-transparent text-sand-500 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 hover:border-sand-300"
+          ? "bg-sand-100 dark:bg-sand-800 text-sand-900 dark:text-sand-100"
+          : "text-sand-500 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 hover:bg-sand-50 dark:hover:bg-sand-800/50"
         }
       `}
     >
