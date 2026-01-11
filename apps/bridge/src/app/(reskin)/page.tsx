@@ -373,17 +373,17 @@ export default function DepositPage() {
           <div className="mt-8 text-center space-y-3 max-w-[480px]">
             <p className="text-sm text-text-secondary">
               First time bridging?{" "}
-              <a href="#" className="text-stacks-500 hover:text-stacks-600 underline underline-offset-2">
+              <a href="https://docs.stacks.co/concepts/sbtc" target="_blank" rel="noopener noreferrer" className="text-stacks-500 hover:text-stacks-600 underline underline-offset-2">
                 Read the guide
               </a>
             </p>
             <div className="flex items-center justify-center gap-4 text-xs text-text-tertiary">
-              <a href="#" className="hover:text-text-secondary transition-colors">
+              <a href="https://docs.stacks.co/stacks-in-depth/sbtc/sbtc-bridge/ledger" target="_blank" rel="noopener noreferrer" className="hover:text-text-secondary transition-colors">
                 Hardware wallet setup
               </a>
               <span>·</span>
-              <a href="#" className="hover:text-text-secondary transition-colors">
-                Common issues
+              <a href="https://docs.stacks.co/concepts/sbtc" target="_blank" rel="noopener noreferrer" className="hover:text-text-secondary transition-colors">
+                FAQ
               </a>
               <span>·</span>
               <a href="https://discord.gg/stacks" target="_blank" rel="noopener noreferrer" className="hover:text-text-secondary transition-colors">
