@@ -25,7 +25,7 @@ export function StepTitle<T extends Step[]>({
       >
         {index + 1}
       </span>
-      <span className="text-sm font-medium leading-tight">{step.title}</span>
+      <span className="text-sm font-medium leading-tight text-sand-900 dark:text-sand-100">{step.title}</span>
     </li>
   );
 }
@@ -60,7 +60,7 @@ export function StepContent({
           }`}
         />
       </div>
-      <div className="flex-1 text-xs leading-tight ml-3 max-w-52">
+      <div className="flex-1 text-xs leading-tight ml-3 max-w-52 text-sand-600 dark:text-sand-300">
         <step.description />
       </div>
     </div>

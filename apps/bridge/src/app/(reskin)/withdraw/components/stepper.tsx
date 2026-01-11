@@ -12,8 +12,8 @@ import { getStacksNetwork } from "@/util/get-stacks-network";
 
 function SubmitWithdraw({}) {
   return (
-    <span className="md:opacity-60 px-4 md:px-0">
-      How much sBTC are you transferring back to BTC? Enter an amount that’s
+    <span className="px-4 md:px-0">
+      How much sBTC are you transferring back to BTC? Enter an amount that's
       above the dust requirement (546 sats)
     </span>
   );
@@ -21,7 +21,7 @@ function SubmitWithdraw({}) {
 
 function AddressDescription({}) {
   return (
-    <span className="md:opacity-60 px-4 md:px-0">
+    <span className="px-4 md:px-0">
       BTC will be sent to a Bitcoin address. Connecting a wallet will auto-fill
       this in, but feel free to submit another address.
     </span>
@@ -123,7 +123,7 @@ function StatusDescription({ stepper }: { stepper: Stepper }) {
     status === WithdrawalStatus.confirmed || status === WithdrawalStatus.failed;
 
   return !isCurrentStep ? (
-    <span className="opacity-60">
+    <span>
       We will confirm the transaction status once the transaction is confirmed.
     </span>
   ) : (
@@ -154,7 +154,7 @@ export const withdrawStepper = defineStepper(
     id: "confirm",
     title: "Confirm Withdrawal",
     description: () => (
-      <span className="md:opacity-60 px-4 md:px-0">
+      <span className="px-4 md:px-0">
         Confirm your withdrawal details and proceed.
       </span>
     ),
