@@ -12,7 +12,6 @@ import { useRouter } from "next/navigation";
 import { elide } from "@/util";
 
 import { withdrawStepper } from "../stepper";
-import { WithdrawTimeline } from "../withdraw-stepper";
 import { FormButton } from "@/app/(reskin)/components/form-button";
 import { ConnectWalletPrompt } from "@/app/(reskin)/components/connect-wallet-prompt";
 import { useSubmitWithdraw } from "../../hooks/use-submit-withdraw";
@@ -86,129 +85,128 @@ export const WithdrawForm = () => {
   };
 
   const formContent = (
-    <Formik
-      initialValues={{
-        amount: "",
-        address: btcAddress || "",
-      }}
-      enableReinitialize={true}
-      validationSchema={withdrawalSchema}
-      onSubmit={async (values: Values) => {
-        const txId = await submitWithdraw({
-          address: values.address,
-          amount: values.amount,
-        });
-        if (txId) {
-          router.push(`/withdraw/${txId}`);
-        }
-      }}
-    >
-      {({
-        errors,
-        touched,
-        isValid,
-        values,
-        submitForm,
-        validateForm,
-        isSubmitting,
-      }) => (
-        <>
-          <Form className="flex flex-col justify-center items-center md:justify-normal gap-2 w-full px-6 lg:w-1/2 max-w-xl flex-1">
-            <div
-              className={`flex flex-col gap-2 flex-1 justify-center md:justify-normal w-full h-full`}
-            >
-              {(!isMobile ||
-                stepper.current.id === "amount" ||
-                stepper.current.id === "confirm" ||
-                stepper.current.id === "status") && (
-                <AmountInput
-                  isDisabled={!isConnected}
-                  value={`${values.amount} sBTC`}
-                  isReadonly={stepper.current.id !== "amount"}
-                  onClickEdit={() => handleEdit("amount")}
-                  isEditable={stepper.current.id !== "status"}
-                  onPressEnter={() => {
-                    return touched.amount && handleEnter(errors.amount);
-                  }}
-                  error={touched.amount && errors.amount}
-                  balance={
-                    isConnected
-                      ? isBalanceError
-                        ? 0
-                        : typeof satsBalance === "string"
-                          ? BigInt(satsBalance)
-                          : satsBalance
-                      : undefined
-                  }
-                />
-              )}
+    <div className="flex flex-col items-center">
+      <div className="w-full max-w-[480px] bg-surface-fourth border border-explorer-border-secondary rounded-2xl shadow-sm p-6">
+        <Formik
+            initialValues={{
+              amount: "",
+              address: btcAddress || "",
+            }}
+            enableReinitialize={true}
+            validationSchema={withdrawalSchema}
+            onSubmit={async (values: Values) => {
+              const txId = await submitWithdraw({
+                address: values.address,
+                amount: values.amount,
+              });
+              if (txId) {
+                router.push(`/withdraw/${txId}`);
+              }
+            }}
+          >
+            {({
+              errors,
+              touched,
+              isValid,
+              values,
+              submitForm,
+              validateForm,
+              isSubmitting,
+            }) => (
+              <Form className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4">
+                  {(!isMobile ||
+                    stepper.current.id === "amount" ||
+                    stepper.current.id === "confirm" ||
+                    stepper.current.id === "status") && (
+                    <AmountInput
+                      isDisabled={!isConnected}
+                      value={`${values.amount} sBTC`}
+                      isReadonly={stepper.current.id !== "amount"}
+                      onClickEdit={() => handleEdit("amount")}
+                      isEditable={stepper.current.id !== "status"}
+                      onPressEnter={() => {
+                        return touched.amount && handleEnter(errors.amount);
+                      }}
+                      error={touched.amount && errors.amount}
+                      balance={
+                        isConnected
+                          ? isBalanceError
+                            ? 0
+                            : typeof satsBalance === "string"
+                              ? BigInt(satsBalance)
+                              : satsBalance
+                          : undefined
+                      }
+                    />
+                  )}
 
-              {(stepper.current.id === "address" ||
-                stepper.current.id === "confirm" ||
-                stepper.current.id === "status") && (
-                <AddressInput
-                  value={elide(values.address, isMobile ? 20 : 8)}
-                  isReadonly={stepper.current.id !== "address"}
-                  isEditable={stepper.current.id !== "status"}
-                  onPressEnter={() => handleEnter(errors.address)}
-                  onClickEdit={() => handleEdit("address")}
-                  error={touched.address && errors.address}
-                />
-              )}
-            </div>
+                  {(stepper.current.id === "address" ||
+                    stepper.current.id === "confirm" ||
+                    stepper.current.id === "status") && (
+                    <AddressInput
+                      value={elide(values.address, isMobile ? 20 : 8)}
+                      isReadonly={stepper.current.id !== "address"}
+                      isEditable={stepper.current.id !== "status"}
+                      onPressEnter={() => handleEnter(errors.address)}
+                      onClickEdit={() => handleEdit("address")}
+                      error={touched.address && errors.address}
+                    />
+                  )}
+                </div>
 
-            <div className="flex gap-5 w-full md:pl-14 self-end">
-              {!stepper.isFirst && !stepper.isLast && (
-                <FormButton
-                  onClick={handlePrevClick}
-                  type="button"
-                  variant="secondary"
-                  className={"flex-1 md:flex-[4]"}
-                >
-                  back
-                </FormButton>
-              )}
+                <div className="flex gap-4 w-full mt-2">
+                  {!stepper.isFirst && !stepper.isLast && (
+                    <FormButton
+                      onClick={handlePrevClick}
+                      type="button"
+                      variant="secondary"
+                      className="flex-1"
+                    >
+                      back
+                    </FormButton>
+                  )}
 
-              <FormButton
-                buttonRef={nextButtonRef}
-                onClick={async () => {
-                  const currentStep = stepper.current.id;
+                  <FormButton
+                    buttonRef={nextButtonRef}
+                    onClick={async () => {
+                      const currentStep = stepper.current.id;
 
-                  if (!isConnected) {
-                    return setShowConnectWallet(true);
-                  }
+                      if (!isConnected) {
+                        return setShowConnectWallet(true);
+                      }
 
-                  if (currentStep === "status") {
-                    return;
-                  }
-                  if (currentStep === "confirm") {
-                    return await submitForm();
-                  }
+                      if (currentStep === "status") {
+                        return;
+                      }
+                      if (currentStep === "confirm") {
+                        return await submitForm();
+                      }
 
-                  const errors = await validateForm();
-                  const isInvalid = errors[currentStep];
-                  if (isInvalid) {
-                    return;
-                  }
-                  handleNextClick();
-                }}
-                type="button"
-                className="flex-1 md:flex-[8]"
-                disabled={isSubmitting}
-              >
-                {stepper.switch({
-                  address: () => (isValid ? "review" : "next"),
-                  amount: () => (isConnected ? "next" : "connect wallet"),
-                  confirm: () => (isSubmitting ? "confirming..." : "confirm"),
-                  status: () => "view history",
-                })}
-              </FormButton>
-            </div>
-          </Form>
-          <WithdrawTimeline />
-        </>
-      )}
-    </Formik>
+                      const errors = await validateForm();
+                      const isInvalid = errors[currentStep];
+                      if (isInvalid) {
+                        return;
+                      }
+                      handleNextClick();
+                    }}
+                    type="button"
+                    className="flex-1"
+                    disabled={isSubmitting}
+                  >
+                    {stepper.switch({
+                      address: () => (isValid ? "review" : "next"),
+                      amount: () => (isConnected ? "next" : "connect wallet"),
+                      confirm: () => (isSubmitting ? "confirming..." : "confirm"),
+                      status: () => "view history",
+                    })}
+                  </FormButton>
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      </div>
   );
 
   // Show blurred preview with CTA when not connected

@@ -54,7 +54,7 @@ export function WithdrawTimeline() {
   }
 
   return isDesktop ? (
-    <div className="pt-6 pb-6 px-8 border rounded-2xl border-black border-opacity-20 dark:border-white dark:border-opacity-20 lg:w-96">
+    <div className="w-64 flex-shrink-0 pt-6 pb-6 px-6 border rounded-2xl border-explorer-border-secondary">
       {/* Timeline header and steps */}
       <h2 className="uppercase text-xl leading-normal text-timeline-active-step-text dark:text-white font-matter-mono">
         Timeline
