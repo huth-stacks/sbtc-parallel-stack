@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Select,
   SelectContent,
@@ -20,7 +22,7 @@ const NavButton = ({
   return (
     <button
       onClick={onClick}
-      className={`w-24 h-16 rounded-lg font-matter-mono uppercase transition-colors ${currentTab === type ? "bg-orange dark:bg-dark-reskin-orange bg-opacity-20 dark:bg-opacity-20 text-orange dark:text-dark-reskin-orange" : "dark:text-midGray"}`}
+      className={`w-24 h-16 rounded-lg font-matter-mono uppercase transition-colors ${currentTab === type ? "bg-orange dark:bg-dark-reskin-orange bg-opacity-20 dark:bg-opacity-20 text-orange dark:text-dark-reskin-orange" : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"}`}
     >
       {type}
     </button>
