@@ -211,8 +211,8 @@ export default function WithdrawPage() {
                       outline-none placeholder:text-text-tertiary/40
                     "
                   />
-                  <div className="flex-shrink-0 flex items-center gap-2 bg-stacks-100 dark:bg-stacks-700/30 py-2 px-4 rounded-full border border-stacks-200 dark:border-stacks-600">
-                    <span className="font-semibold text-stacks-700 dark:text-stacks-300">sBTC</span>
+                  <div className="flex-shrink-0 flex items-center gap-2 bg-stacks-100 dark:bg-stacks-900/80 py-2 px-4 rounded-full border border-stacks-200 dark:border-stacks-500">
+                    <span className="font-semibold text-stacks-700 dark:text-stacks-200">sBTC</span>
                   </div>
                 </div>
               </div>
