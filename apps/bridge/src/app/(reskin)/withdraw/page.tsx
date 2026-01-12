@@ -119,10 +119,15 @@ export default function WithdrawPage() {
     ? validateBitcoinAddress(btcAddress, config.WALLET_NETWORK || "mainnet")
     : false;
 
-  // Amount validation
+  // Check wallet connection status
+  const isConnected = !!walletInfo?.selectedWallet;
+
+  // Amount validation - prioritize wallet connection check
   const amountError =
     touched.amount && amount
-      ? amountNum > sbtcAvailable
+      ? !isConnected
+        ? "Please connect a wallet to continue"
+        : amountNum > sbtcAvailable
         ? "Insufficient balance"
         : amountNum < minWithdrawBtc
         ? `Minimum withdrawal is ${minWithdrawBtc.toFixed(6)} sBTC`
@@ -158,8 +163,6 @@ export default function WithdrawPage() {
       setIsSubmitting(false);
     }
   };
-
-  const isConnected = !!walletInfo?.selectedWallet;
 
   const formContent = (
     <div className="flex flex-col items-center min-h-[80vh] py-8">
@@ -212,7 +215,7 @@ export default function WithdrawPage() {
                     "
                   />
                   <div className="flex-shrink-0 flex items-center gap-2 bg-stacks-100 dark:bg-stacks-500 py-2 px-4 rounded-full border border-stacks-200 dark:border-stacks-600">
-                    <span className="font-semibold text-stacks-700 dark:text-black">sBTC</span>
+                    <span className="font-semibold text-stacks-700 dark:text-sand-1000">sBTC</span>
                   </div>
                 </div>
               </div>

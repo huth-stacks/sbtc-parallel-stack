@@ -110,10 +110,15 @@ export default function DepositPage() {
   const minDepositBtc = (perDepositMinimum || FALLBACK_MIN_SATS) / 1e8;
   const maxDepositBtc = currentCap / 1e8;
 
-  // Validation
+  // Check wallet connection status
+  const isConnected = !!walletInfo?.selectedWallet;
+
+  // Validation - prioritize wallet connection check
   const amountError =
     touched.amount && amount
-      ? amountNum > btcAvailable
+      ? !isConnected
+        ? "Please connect a wallet to continue"
+        : amountNum > btcAvailable
         ? "Insufficient balance"
         : amountNum < minDepositBtc
         ? `Minimum deposit is ${minDepositBtc.toFixed(4)} BTC`
@@ -144,8 +149,6 @@ export default function DepositPage() {
       router.push(`/${result.bitcoinTxid}`);
     }
   };
-
-  const isConnected = !!walletInfo?.selectedWallet;
 
   const formContent = (
     <div className="flex flex-col items-center min-h-[80vh] py-8">
@@ -198,7 +201,7 @@ export default function DepositPage() {
                     "
                   />
                   <div className="flex-shrink-0 flex items-center gap-2 bg-bitcoin-100 dark:bg-bitcoin-500 py-2 px-4 rounded-full border border-bitcoin-200 dark:border-bitcoin-600">
-                    <span className="font-semibold text-bitcoin-700 dark:text-black">BTC</span>
+                    <span className="font-semibold text-bitcoin-700 dark:text-sand-1000">BTC</span>
                   </div>
                 </div>
               </div>
