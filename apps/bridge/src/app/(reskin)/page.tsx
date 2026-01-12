@@ -197,8 +197,8 @@ export default function DepositPage() {
                       outline-none placeholder:text-text-tertiary/40
                     "
                   />
-                  <div className="flex-shrink-0 flex items-center gap-2 bg-bitcoin-100 dark:bg-bitcoin-900/80 py-2 px-4 rounded-full border border-bitcoin-200 dark:border-bitcoin-500">
-                    <span className="font-semibold text-bitcoin-700 dark:text-bitcoin-200">BTC</span>
+                  <div className="flex-shrink-0 flex items-center gap-2 bg-bitcoin-100 dark:bg-bitcoin-700 py-2 px-4 rounded-full border border-bitcoin-200 dark:border-bitcoin-600">
+                    <span className="font-semibold text-bitcoin-700 dark:text-bitcoin-100">BTC</span>
                   </div>
                 </div>
               </div>
