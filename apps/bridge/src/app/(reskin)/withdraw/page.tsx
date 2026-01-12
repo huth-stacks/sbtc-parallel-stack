@@ -295,8 +295,10 @@ export default function WithdrawPage() {
                   <div className="w-6 h-6 rounded-full bg-bitcoin-100 dark:bg-bitcoin-700/30 flex items-center justify-center">
                     <span className="text-bitcoin-600 dark:text-bitcoin-400 text-[10px] font-bold">BTC</span>
                   </div>
-                  <span className="text-sm text-text-primary font-medium">{elideAddress(btcAddress, 10)}</span>
-                  <span className="text-xs text-text-tertiary">(Connected wallet)</span>
+                  <span className="text-sm text-text-primary font-medium">
+                    {isConnected ? elideAddress(btcAddress, 10) : "Connect wallet to set address"}
+                  </span>
+                  {isConnected && <span className="text-xs text-text-tertiary">(Connected wallet)</span>}
                 </div>
               )}
             </div>

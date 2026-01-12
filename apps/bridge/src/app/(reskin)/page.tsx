@@ -269,8 +269,10 @@ export default function DepositPage() {
                   <div className="w-6 h-6 rounded-full bg-stacks-100 dark:bg-stacks-700/30 flex items-center justify-center">
                     <span className="text-stacks-600 dark:text-stacks-400 text-[10px] font-bold">STX</span>
                   </div>
-                  <span className="text-sm text-text-primary font-medium">{elideAddress(stxAddress, 10)}</span>
-                  <span className="text-xs text-text-tertiary">(Connected wallet)</span>
+                  <span className="text-sm text-text-primary font-medium">
+                    {isConnected ? elideAddress(stxAddress, 10) : "Connect wallet to set address"}
+                  </span>
+                  {isConnected && <span className="text-xs text-text-tertiary">(Connected wallet)</span>}
                 </div>
               )}
             </div>
