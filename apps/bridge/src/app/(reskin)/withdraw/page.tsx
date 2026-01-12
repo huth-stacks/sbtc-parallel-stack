@@ -19,7 +19,6 @@ import { useSubmitWithdraw } from "./hooks/use-submit-withdraw";
 import { getWithdrawalMaxFee } from "@/actions/get-withdrawal-max-fee";
 import { useEmilyLimits } from "@/hooks/use-mint-caps";
 import { WithdrawHowItWorks } from "../components/withdraw-how-it-works";
-import { ConnectWalletPrompt } from "../components/connect-wallet-prompt";
 import { validateBitcoinAddress } from "@/util/validate-bitcoin-address";
 
 // BTC price fetch - uses configured mempool URL
@@ -356,8 +355,8 @@ export default function WithdrawPage() {
 
             {/* Submit Button */}
             <button
-              onClick={handleSubmit}
-              disabled={!amount || !!amountError || !btcAddress || !!addressError || isSubmitting}
+              onClick={isConnected ? handleSubmit : () => setShowConnectWallet(true)}
+              disabled={isConnected && (!amount || !!amountError || !btcAddress || !!addressError || isSubmitting)}
               className="
                 w-full h-14 rounded-xl font-semibold text-base
                 bg-sand-800 dark:bg-sand-100
@@ -371,6 +370,8 @@ export default function WithdrawPage() {
             >
               {isSubmitting
                 ? "Processing..."
+                : !isConnected
+                ? "Connect Wallet"
                 : !amount
                 ? "Enter amount"
                 : amountError
@@ -410,15 +411,6 @@ export default function WithdrawPage() {
       </div>
     </div>
   );
-
-  // Show blurred preview with CTA when not connected
-  if (!isConnected) {
-    return (
-      <ConnectWalletPrompt description="Connect your wallet to withdraw sBTC back to BTC.">
-        {formContent}
-      </ConnectWalletPrompt>
-    );
-  }
 
   return formContent;
 }

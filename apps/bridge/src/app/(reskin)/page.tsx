@@ -18,7 +18,6 @@ import useMintCaps from "@/hooks/use-mint-caps";
 import { useSendDeposit } from "@/app/(reskin)/hooks/use-send-deposit";
 import getBtcBalance from "@/actions/get-btc-balance";
 import { HowItWorksSidebar } from "./components/how-it-works-sidebar";
-import { ConnectWalletPrompt } from "./components/connect-wallet-prompt";
 import Decimal from "decimal.js";
 
 // BTC price fetch - uses configured mempool URL, falls back to mempool.space for mainnet
@@ -332,8 +331,8 @@ export default function DepositPage() {
 
             {/* Submit Button */}
             <button
-              onClick={handleSubmit}
-              disabled={!amount || !!amountError || isPending}
+              onClick={isConnected ? handleSubmit : () => setShowConnectWallet(true)}
+              disabled={isConnected && (!amount || !!amountError || isPending)}
               className="
                 w-full h-14 rounded-xl font-semibold text-base
                 bg-sand-800 dark:bg-sand-100
@@ -347,6 +346,8 @@ export default function DepositPage() {
             >
               {isPending
                 ? "Processing..."
+                : !isConnected
+                ? "Connect Wallet"
                 : !amount
                 ? "Enter amount"
                 : amountError
@@ -386,15 +387,6 @@ export default function DepositPage() {
       </div>
     </div>
   );
-
-  // Show blurred preview with CTA when not connected
-  if (!isConnected) {
-    return (
-      <ConnectWalletPrompt description="Connect your wallet to deposit BTC and receive sBTC.">
-        {formContent}
-      </ConnectWalletPrompt>
-    );
-  }
 
   return formContent;
 }
