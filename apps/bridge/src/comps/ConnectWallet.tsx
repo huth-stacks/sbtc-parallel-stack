@@ -91,9 +91,16 @@ const ConnectWallet = ({ onClose }: ConnectWalletProps) => {
         case WalletProvider.ASIGNA:
           addresses = await getAddressesAsigna({ action: asignaConnect });
       }
+      // DEBUG: Log wallet addresses and network detection
+      console.log("[DEBUG] Wallet addresses received:", JSON.stringify(addresses, null, 2));
+      console.log("[DEBUG] WALLET_NETWORK from config:", WALLET_NETWORK);
+
       // in the case of fordefi and asigna
       // we might have only one of the addresses
       const isMainnetAddress = isMainnetWallet(addresses);
+      console.log("[DEBUG] isMainnetAddress result:", isMainnetAddress);
+      console.log("[DEBUG] Bitcoin address:", addresses?.payment?.address);
+      console.log("[DEBUG] Stacks address:", addresses?.stacks?.address);
       // null means we couldn't get any address at all
       if (isMainnetAddress === null) {
         throw new Error("Could not determine wallet address");
