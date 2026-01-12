@@ -178,7 +178,7 @@ export default function DepositPage() {
                   transition-all overflow-hidden
                   ${amountError
                     ? "border-feedback-red-500"
-                    : "border-explorer-border-primary focus-within:border-stacks-400 focus-within:ring-2 focus-within:ring-stacks-400/20"
+                    : "border-explorer-border-primary focus-within:border-stacks-400"
                   }
                 `}
               >
